@@ -1,0 +1,40 @@
+This script adds the functions "animateAddClass", "animateRemoveClass" and "animateToggleClass" to the Dojo namespace (dojo.animateAddClass).
+
+These functions enable you to animate to the style that is defined in a CSS class.
+
+A brief example; if we have an HTML node:
+
+<pre>
+<div id="foo">
+    Lorum ipsum
+</div>
+</pre>
+
+And a piece of CSS:
+<pre>
+.bar {
+  background: red;
+}
+</pre>
+
+We can use this function to animate the transistion between #foo and #foo.bar:
+<pre>
+dojo.animateAddClass({
+    node:"foo",
+    className:"bar"
+}).play();
+</pre>
+
+It works in the exact same way as dojo.animateProperty, the only extra property you have to provide is "className".
+So more custom configurations are possible as well.
+<pre>
+dojo.animateAddClass({
+    node:"foo",
+    className:"bar",
+    duration: 1500,
+    easing:dojo.fx.easing.bounceIn,
+    onEnd: function(){
+        console.log("ended");
+    }
+}).play();
+</pre>
