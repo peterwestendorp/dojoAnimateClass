@@ -23,7 +23,7 @@ dojo.animateAddClass({
 }).play();
 
 This script is based on dojo.animateProperty so more custom configurations are
-possible as well. The only extra property you have to provide is "className".
+possible as well. The only extra property you have to provide is "className", the rest is basically all just dojo.animateproperty().
 
 dojo.animateAddClass({
     node:"foo",
