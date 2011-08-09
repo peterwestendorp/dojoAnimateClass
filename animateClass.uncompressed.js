@@ -44,7 +44,7 @@ function pwAnimateClass(args, mode){
   if(typeof(args.node) === "string"){
     elm = dojo.byId(args.node);
   }
-  
+	
   function rewriteProperties(styleKeys){
     //rewrite properties like font-size:14px to fontSize:14
     //returns an object with the rewritten properties and their values
@@ -56,13 +56,23 @@ function pwAnimateClass(args, mode){
         return letter.toUpperCase();
     }
     
-    for(i=0; i<styleKeys.length; i++){
-      sKey = styleKeys[i].replace(/\-(\w)/g, letterToUpperCase);
-      
-      if(styleKeys[sKey]){
-        styles[sKey] = styleKeys[sKey].replace("px","");
-      }
-    }
+		if(styleKeys.length){
+			for(i=0; i<styleKeys.length; i++){
+				sKey = styleKeys[i].replace(/\-(\w)/g, letterToUpperCase);
+				
+				if(styleKeys[sKey]){
+					styles[sKey] = styleKeys[sKey].replace("px","");
+				}
+			}
+		}
+		else {
+			//IE
+			for(prop in styleKeys){
+				var value = styleKeys[prop]+"";
+				styles[prop] = value.replace("px", "");
+			}
+		}
+    
     return styles;
   }
   
@@ -87,16 +97,16 @@ function pwAnimateClass(args, mode){
       dojo.addClass(copiedNode, className);
     }
   }
-  
+	
   //add the copy to the DOM to calculate all the styles
-  oldDisplayProp = dojo.style(copiedNode, "display");
-  dojo.style(copiedNode, "display", "none");
   document.body.appendChild(copiedNode);
-  
+	oldDisplayProp = dojo.style(copiedNode, "display");
+	dojo.style(copiedNode, "display", "none");
+	
   //get the styles
   currentStyles = rewriteProperties(dojo.style(elm));
   newStyles = rewriteProperties(dojo.style(copiedNode));
-  
+	
   //set the display prop to how it was
   currentStyles.display = oldDisplayProp;
   newStyles.display = oldDisplayProp;
@@ -153,7 +163,7 @@ function pwAnimateClass(args, mode){
 }
 
 dojo.plugin("animateAddClass", function(args){
-  return pwAnimateClass(args, "addClass");
+	return pwAnimateClass(args, "addClass");
 });
 
 dojo.plugin("animateRemoveClass", function(args){
