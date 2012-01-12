@@ -5,7 +5,7 @@ This script adds the functions "animateAddClass", "animateRemoveClass" and
 
 These functions enable you to animate to the style that is defined in a CSS class.
 
-It's more lightweight than the [dojox.fx.style version](http://dojotoolkit.org/reference-guide/dojox/fx/style.html "dojox.fx.style")  (9KB vs. 2KB)
+It's more lightweight than the [dojox.fx.style version](http://dojotoolkit.org/reference-guide/dojox/fx/style.html "dojox.fx.style")  (2KB vs. 9KB)
 
 How to use it
 -------------

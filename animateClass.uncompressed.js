@@ -12,6 +12,7 @@ strict: false*/
 /*global window, alert, dojo */
 
 define(function(){
+  console.log("thing");
   (function(d){
     d.fn = d.NodeList.prototype;
     d.plugin = function(pluginNamespace, fn, way){
@@ -25,11 +26,11 @@ define(function(){
     }
   })(dojo);
 
-  function pwAnimateClass(args, mode){
+  function animateClass(args, mode){
     var elm = args.node,
         className = args.className,
-        duration = args.duration,
-        easing = args.easing,
+        duration = args.duration || 500,
+        easing = args.easing || null,
         onEnd = args.onEnd,
         copiedNode,
         currentStyles,
@@ -51,7 +52,8 @@ define(function(){
       //returns an object with the rewritten properties and their values
 
       var styles = {},
-          sKey;
+          sKey,
+          value;
 
       function letterToUpperCase(all, letter){
           return letter.toUpperCase();
@@ -69,7 +71,7 @@ define(function(){
       else {
         //IE
         for(prop in styleKeys){
-          var value = styleKeys[prop]+"";
+          value = styleKeys[prop]+"";
           styles[prop] = value.replace("px", "");
         }
       }
@@ -158,20 +160,22 @@ define(function(){
         }
 
         //execute onEnd function
-        onEnd();
+        if(onEnd){
+          onEnd();
+        }
       }
     });
   }
 
   dojo.plugin("animateAddClass", function(args){
-    return pwAnimateClass(args, "addClass");
+    return animateClass(args, "addClass");
   });
 
   dojo.plugin("animateRemoveClass", function(args){
-    return pwAnimateClass(args, "removeClass");
+    return animateClass(args, "removeClass");
   });
 
   dojo.plugin("animateToggleClass", function(args){
-    return pwAnimateClass(args, "toggleClass");
+    return animateClass(args, "toggleClass");
   });
 });
